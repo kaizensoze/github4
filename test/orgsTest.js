@@ -29,7 +29,8 @@ describe("[orgs]", function() {
         client.orgs.addOrganizationMembership(
             {
                 org: "String",
-                user: "String"
+                user: "String",
+                role: "String"
             },
             function(err, res) {
                 Assert.equal(err, null);
@@ -73,6 +74,34 @@ describe("[orgs]", function() {
                 id: "String",
                 user: "String",
                 repo: "String"
+            },
+            function(err, res) {
+                Assert.equal(err, null);
+                // other assertions go here
+                next();
+            }
+        );
+    });
+
+    it("should successfully execute GET /orgs/:org/members/:user (checkMembership)",  function(next) {
+        client.orgs.checkMembership(
+            {
+                org: "String",
+                user: "String"
+            },
+            function(err, res) {
+                Assert.equal(err, null);
+                // other assertions go here
+                next();
+            }
+        );
+    });
+
+    it("should successfully execute GET /orgs/:org/public_members/:user (checkPublicMembership)",  function(next) {
+        client.orgs.checkPublicMembership(
+            {
+                org: "String",
+                user: "String"
             },
             function(err, res) {
                 Assert.equal(err, null);
@@ -169,10 +198,9 @@ describe("[orgs]", function() {
         );
     });
 
-    it("should successfully execute GET /users/:user/orgs (getFromUser)",  function(next) {
-        client.orgs.getFromUser(
+    it("should successfully execute GET /organizations (getAll)",  function(next) {
+        client.orgs.getAll(
             {
-                user: "String",
                 page: "Number",
                 per_page: "Number"
             },
@@ -184,11 +212,12 @@ describe("[orgs]", function() {
         );
     });
 
-    it("should successfully execute GET /orgs/:org/members/:user (getMember)",  function(next) {
-        client.orgs.getMember(
+    it("should successfully execute GET /users/:user/orgs (getForUser)",  function(next) {
+        client.orgs.getForUser(
             {
-                org: "String",
-                user: "String"
+                user: "String",
+                page: "Number",
+                per_page: "Number"
             },
             function(err, res) {
                 Assert.equal(err, null);
@@ -214,11 +243,24 @@ describe("[orgs]", function() {
         );
     });
 
-    it("should successfully execute GET /orgs/:org/public_members/:user (getPublicMember)",  function(next) {
-        client.orgs.getPublicMember(
+    it("should successfully execute GET /orgs/:org/memberships/:user (getOrganizationMembership)",  function(next) {
+        client.orgs.getOrganizationMembership(
             {
                 org: "String",
                 user: "String"
+            },
+            function(err, res) {
+                Assert.equal(err, null);
+                // other assertions go here
+                next();
+            }
+        );
+    });
+
+    it("should successfully execute GET /user/memberships/orgs (getOrganizationMemberships)",  function(next) {
+        client.orgs.getOrganizationMemberships(
+            {
+                state: "String"
             },
             function(err, res) {
                 Assert.equal(err, null);
@@ -392,7 +434,8 @@ describe("[orgs]", function() {
                 company: "String",
                 email: "String",
                 location: "String",
-                name: "String"
+                name: "String",
+                description: "String"
             },
             function(err, res) {
                 Assert.equal(err, null);

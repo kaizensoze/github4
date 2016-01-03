@@ -1246,11 +1246,12 @@ github.misc.renderMarkdownRaw({ ... });
 /**
  * @api {put} /orgs/:org/memberships/:user addOrganizationMembership
  * @apiName addOrganizationMembership
- * @apiDescription undefined
+ * @apiDescription Add or update organization membership
  * @apiGroup orgs
  *
  * @apiParam {String} org   
  * @apiParam {String} user   
+ * @apiParam {String} role   admin, member
  * @apiExample {js} ex:
 github.orgs.addOrganizationMembership({ ... });
  */
@@ -1293,9 +1294,33 @@ github.orgs.addTeamRepo({ ... });
  */
 
 /**
+ * @api {get} /orgs/:org/members/:user checkMembership
+ * @apiName checkMembership
+ * @apiDescription Check membership
+ * @apiGroup orgs
+ *
+ * @apiParam {String} org   
+ * @apiParam {String} user   
+ * @apiExample {js} ex:
+github.orgs.checkMembership({ ... });
+ */
+
+/**
+ * @api {get} /orgs/:org/public_members/:user checkPublicMembership
+ * @apiName checkPublicMembership
+ * @apiDescription Check public membership
+ * @apiGroup orgs
+ *
+ * @apiParam {String} org   
+ * @apiParam {String} user   
+ * @apiExample {js} ex:
+github.orgs.checkPublicMembership({ ... });
+ */
+
+/**
  * @api {delete} /orgs/:org/public_members/:user concealMembership
  * @apiName concealMembership
- * @apiDescription undefined
+ * @apiDescription Conceal a user's membership
  * @apiGroup orgs
  *
  * @apiParam {String} org   
@@ -1357,7 +1382,7 @@ github.orgs.deleteTeamRepo({ ... });
 /**
  * @api {get} /orgs/:org get
  * @apiName get
- * @apiDescription undefined
+ * @apiDescription Get an organization
  * @apiGroup orgs
  *
  * @apiParam {String} org   
@@ -1368,28 +1393,28 @@ github.orgs.get({ ... });
  */
 
 /**
- * @api {get} /users/:user/orgs getFromUser
- * @apiName getFromUser
- * @apiDescription undefined
+ * @api {get} /organizations getAll
+ * @apiName getAll
+ * @apiDescription List all organizations
+ * @apiGroup orgs
+ *
+ * @apiParam {Number} [page]  Optional Page number of the results to fetch.
+ * @apiParam {Number} [per_page]  Optional A custom page size up to 100. Default is 30.
+ * @apiExample {js} ex:
+github.orgs.getAll({ ... });
+ */
+
+/**
+ * @api {get} /users/:user/orgs getForUser
+ * @apiName getForUser
+ * @apiDescription List user's organizations
  * @apiGroup orgs
  *
  * @apiParam {String} user   
  * @apiParam {Number} [page]  Optional Page number of the results to fetch.
  * @apiParam {Number} [per_page]  Optional A custom page size up to 100. Default is 30.
  * @apiExample {js} ex:
-github.orgs.getFromUser({ ... });
- */
-
-/**
- * @api {get} /orgs/:org/members/:user getMember
- * @apiName getMember
- * @apiDescription undefined
- * @apiGroup orgs
- *
- * @apiParam {String} org   
- * @apiParam {String} user   
- * @apiExample {js} ex:
-github.orgs.getMember({ ... });
+github.orgs.getForUser({ ... });
  */
 
 /**
@@ -1407,21 +1432,32 @@ github.orgs.getMembers({ ... });
  */
 
 /**
- * @api {get} /orgs/:org/public_members/:user getPublicMember
- * @apiName getPublicMember
- * @apiDescription undefined
+ * @api {get} /orgs/:org/memberships/:user getOrganizationMembership
+ * @apiName getOrganizationMembership
+ * @apiDescription Get organization membership
  * @apiGroup orgs
  *
  * @apiParam {String} org   
  * @apiParam {String} user   
  * @apiExample {js} ex:
-github.orgs.getPublicMember({ ... });
+github.orgs.getOrganizationMembership({ ... });
+ */
+
+/**
+ * @api {get} /user/memberships/orgs getOrganizationMemberships
+ * @apiName getOrganizationMemberships
+ * @apiDescription List your organization memberships
+ * @apiGroup orgs
+ *
+ * @apiParam {String} [state]  Optional Indicates the state of the memberships to return. Can be either active or pending. If not specified, both active and pending memberships are returned.
+ * @apiExample {js} ex:
+github.orgs.getOrganizationMemberships({ ... });
  */
 
 /**
  * @api {get} /orgs/:org/public_members getPublicMembers
  * @apiName getPublicMembers
- * @apiDescription undefined
+ * @apiDescription Public members list
  * @apiGroup orgs
  *
  * @apiParam {String} org   
@@ -1519,7 +1555,7 @@ github.orgs.getTeams({ ... });
 /**
  * @api {put} /orgs/:org/public_members/:user publicizeMembership
  * @apiName publicizeMembership
- * @apiDescription undefined
+ * @apiDescription Publicize a user's membership
  * @apiGroup orgs
  *
  * @apiParam {String} org   
@@ -1531,7 +1567,7 @@ github.orgs.publicizeMembership({ ... });
 /**
  * @api {delete} /orgs/:org/members/:user removeMember
  * @apiName removeMember
- * @apiDescription undefined
+ * @apiDescription Remove a member
  * @apiGroup orgs
  *
  * @apiParam {String} org   
@@ -1543,7 +1579,7 @@ github.orgs.removeMember({ ... });
 /**
  * @api {delete} /orgs/:org/memberships/:user removeOrganizationMembership
  * @apiName removeOrganizationMembership
- * @apiDescription undefined
+ * @apiDescription Remove organization membership
  * @apiGroup orgs
  *
  * @apiParam {String} org   
@@ -1555,15 +1591,16 @@ github.orgs.removeOrganizationMembership({ ... });
 /**
  * @api {patch} /orgs/:org update
  * @apiName update
- * @apiDescription undefined
+ * @apiDescription Edit an organization
  * @apiGroup orgs
  *
  * @apiParam {String} org   
  * @apiParam {String} [billing_email]  Optional Billing email address. This address is not publicized.
- * @apiParam {String} [company]  Optional 
- * @apiParam {String} [email]  Optional Publicly visible email address.
- * @apiParam {String} [location]  Optional 
- * @apiParam {String} [name]  Optional 
+ * @apiParam {String} [company]  Optional The company name.
+ * @apiParam {String} [email]  Optional The publicly visible email address.
+ * @apiParam {String} [location]  Optional The location.
+ * @apiParam {String} [name]  Optional The shorthand name of the company.
+ * @apiParam {String} [description]  Optional The description of the company.
  * @apiExample {js} ex:
 github.orgs.update({ ... });
  */
@@ -3316,6 +3353,17 @@ github.user.getKeys({ ... });
  * @apiParam {Number} [per_page]  Optional A custom page size up to 100. Default is 30.
  * @apiExample {js} ex:
 github.user.getKeysFromUser({ ... });
+ */
+
+/**
+ * @api {patch} /user/memberships/orgs/:org getOrganizationMembership
+ * @apiName getOrganizationMembership
+ * @apiDescription Get your organization membership
+ * @apiGroup user
+ *
+ * @apiParam {String} org   
+ * @apiExample {js} ex:
+github.user.getOrganizationMembership({ ... });
  */
 
 /**
