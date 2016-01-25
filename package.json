@@ -31,7 +31,8 @@
     "mime": "^1.2.11"
   },
   "devDependencies": {
-    "mocha": "~1.13.0"
+    "mocha": "~2.3.4",
+    "nock": "^5.2.1"
   },
   "main": ".",
   "scripts": {
