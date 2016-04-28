@@ -1,5 +1,5 @@
 node_modules
 .settings*
 .c9revisions
-
-test_auth.json
+npm-debug.log*
+testAuth.json
