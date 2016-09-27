@@ -1,4 +1,4 @@
-##### This fork has been merged into the upstream ([mikedeboer/node-github](https://github.com/mikedeboer/node-github)). Use that instead.
+##### This repo is deprecated. Use [mikedeboer/node-github](https://github.com/mikedeboer/node-github) instead.
 
 # Node-github
 
